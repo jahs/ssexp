@@ -15,7 +15,7 @@ produces:
 
 .. code-block:: scheme
 
-   (: brian: "naughty boy")
+  (: brian: "naughty boy")
 
 We use the ``preserialize`` library to pre-serialize more complex
 structures, and so can handle shared objects, cyclic references and
@@ -23,26 +23,26 @@ deep structures:
 
 .. code-block:: python
 
-class Parrot(object):
-       def __init__(self, is_dead=True, from_egg=None):
-           self.is_dead = is_dead
-           self.from_egg = from_egg
+  class Parrot(object):
+      def __init__(self, is_dead=True, from_egg=None):
+          self.is_dead = is_dead
+          self.from_egg = from_egg
 
-   preserializer = ssexp.SsexpPreserializer()
-   preserializer.register(Parrot, version=2)
+  preserializer = ssexp.SsexpPreserializer()
+  preserializer.register(Parrot, version=2)
 
-   class Egg(object):
-       def __init__(self, from_parrot=None):
-           self.from_parrot = from_parrot
+  class Egg(object):
+      def __init__(self, from_parrot=None):
+          self.from_parrot = from_parrot
 
-   preserializer.register(Egg)
+  preserializer.register(Egg)
 
-   parrot = Parrot()
-   parrot.from_egg = Egg(from_parrot=parrot)
+  parrot = Parrot()
+  parrot.from_egg = Egg(from_parrot=parrot)
 
-   ssexp.dumps({'brian': 'naughty boy',
-                3: 'Antioch',
-		'ouroboros': parrot}, preserializer)
+  ssexp.dumps({'brian': 'naughty boy',
+               3: 'Antioch',
+               'ouroboros': parrot}, preserializer)
 
 produces:
 
