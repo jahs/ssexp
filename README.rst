@@ -4,10 +4,12 @@ Scheme S-expressions
 This is a serializer that produces an S-expression compatible with a
 subset of R7RS Scheme.
 
-Basic usage::
+Basic usage:
+
+.. code-block:: python
 
   import ssexp
-  ssexp.dump({'brian': 'naughty boy'})
+  ssexp.dumps({'brian': 'naughty boy'})
 
 produces:
 
@@ -17,9 +19,11 @@ produces:
 
 We use the ``preserialize`` library to pre-serialize more complex
 structures, and so can handle shared objects, cyclic references and
-deep structures::
+deep structures:
 
-   class Parrot(object):
+.. code-block:: python
+
+class Parrot(object):
        def __init__(self, is_dead=True, from_egg=None):
            self.is_dead = is_dead
            self.from_egg = from_egg
