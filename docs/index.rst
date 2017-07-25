@@ -17,7 +17,7 @@ subset of R7RS Scheme.
 Usage
 -----
 
-The function :func:`ssexp.dumps` serializes and object to a string. A
+The function :func:`ssexp.dumps` serializes an object to a string. A
 pre-serializer can be supplied if the object contains more complex
 objects.
 
