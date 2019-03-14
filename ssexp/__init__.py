@@ -120,7 +120,7 @@ def remove_mapping(data, head_key=u":type", dict_name=None,
 
 
 @recur.stackless
-def to_ssexp(tree):
+def to_ssexp(tree, indent=2, current=2):
     t = type(tree)
     if t == int or t == float:
         yield preserialize.STR(tree)
@@ -133,14 +133,20 @@ def to_ssexp(tree):
         if n == 2:  # dest
             yield u"#{0}#".format(tree[1])
         elif n == 3:  # source
-            yield u"#{0}={1}".format(tree[1], (yield to_ssexp.call(tree[2])))
+            yield u"#{0}={1}".format(tree[1], (yield to_ssexp.call(tree[2], indent, current)))
         else:
             raise Exception(u"Bad :label: form.")
     else:
         new = []
-        for item in tree:
-            new.append((yield to_ssexp.call(item)))
-        yield u"({0})".format(u" ".join(new))
+        for i, item in enumerate(tree):
+            if i > 0:
+                if isinstance(item, list):
+                    space = " "*current
+                    new.append(f"\n{space}")
+                else:
+                    new.append(" ")
+            new.append((yield to_ssexp.call(item, indent, current + indent)))
+        yield u"({0})".format(u"".join(new))
 
 
 def dumps(obj, preserializer=None):
